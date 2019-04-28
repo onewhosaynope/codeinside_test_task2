@@ -2,9 +2,6 @@ package com.company;
 
 import java.util.Random;
 
-/**
- *
- */
 public class Generator {
 
     private static final String CHAR_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-";
