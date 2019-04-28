@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ *
+ */
 public class DBhelper {
 
     private Connection conn;
@@ -21,7 +24,12 @@ public class DBhelper {
         this.pass = pass;
     }
 
-
+    /**
+     * установка соединения с базой данных.
+     * @return - true
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public boolean connect() throws SQLException, ClassNotFoundException {
         if (host.isEmpty() || dbName.isEmpty() || user.isEmpty() || pass.isEmpty()) {
             throw new SQLException("Database credentials missing");
@@ -35,8 +43,14 @@ public class DBhelper {
         return true;
     }
 
-
-    //добавление записи
+    /**
+     * добавление в базу данных письма на очередь.
+     * @param receiver  - получатель сообщения.
+     * @param title - загловок письма.
+     * @param text - содержимое письма.
+     * @return - sql запрос для добавления письма с заданными параметрами в бд на очередь.
+     * @throws SQLException
+     */
     public int insert(String receiver, String title, String text) throws SQLException {
 
         String query = String.format(
@@ -47,8 +61,14 @@ public class DBhelper {
         return this.conn.createStatement().executeUpdate(query);
     }
 
-
-    //удаление записи по условию
+    /**
+     * удаление из бд письма с заданными параметрами.
+     * @param receiver - получатель сообщения.
+     * @param title - загловок письма.
+     * @param text - содержимое письма.
+     * @return - sql запрос для удаления письма с заданными параметрами.
+     * @throws SQLException
+     */
     public int remove(String receiver, String title, String text) throws SQLException {
 
         String query = String.format(
@@ -59,8 +79,7 @@ public class DBhelper {
         return this.conn.createStatement().executeUpdate(query);
     }
 
-
-    // получение первой записи в бд
+    // подтягивает из бд первую запись
     public ResultSet getFirstRecord() throws SQLException {
 
         String query = "SELECT * FROM requests LIMIT 1";
@@ -69,10 +88,8 @@ public class DBhelper {
         return this.conn.createStatement().executeQuery(query);
     }
 
-
     //выполнение сторонних запросов
     public ResultSet execQuery(String query) throws SQLException {
         return this.conn.createStatement().executeQuery(query);
     }
-
 }

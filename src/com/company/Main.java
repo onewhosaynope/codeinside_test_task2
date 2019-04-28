@@ -13,7 +13,6 @@ public class Main {
                 DBdata.PASSWORD);
 
         try {
-
             if (client.connect()) {
 
                 Mailer.add_to_queue(
@@ -23,14 +22,9 @@ public class Main {
                         client);
 
                 Mailer.send_message(client);
-
             }
-
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
