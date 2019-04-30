@@ -50,10 +50,14 @@ public class DBhelper {
      */
     public int insert(String receiver, String title, String text) throws SQLException {
 
+        if (receiver.isEmpty()) {
+            throw new SQLException("Receiver parameter is empty");
+        }
+
         String query = String.format(
                 "INSERT INTO requests (receiver, title, text) VALUES ('%s', '%s', '%s')",
                 receiver, title, text);
-        System.out.println(query);
+        System.out.println("Выполненный sql запрос:" + query);
 
         return this.conn.createStatement().executeUpdate(query);
     }
@@ -68,10 +72,14 @@ public class DBhelper {
      */
     public int remove(String receiver, String title, String text) throws SQLException {
 
+        if (receiver.isEmpty()) {
+            throw new SQLException("Receiver parameter is empty");
+        }
+
         String query = String.format(
                 "DELETE FROM requests WHERE receiver='%s' AND title='%s' AND text='%s'",
                 receiver, title, text);
-        System.out.println(query);
+        System.out.println("Выполненный sql запрос:" + query);
 
         return this.conn.createStatement().executeUpdate(query);
     }
@@ -80,7 +88,7 @@ public class DBhelper {
     public ResultSet getFirstRecord() throws SQLException {
 
         String query = "SELECT * FROM requests LIMIT 1";
-        System.out.println(query);
+        System.out.println("Выполненный sql запрос:" + query);
 
         return this.conn.createStatement().executeQuery(query);
     }
